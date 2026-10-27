@@ -915,14 +915,13 @@
     </script>
     <div id="modalEstado" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
 
-       <div class="bg-white p-8 rounded-3xl w-full max-w-md relative">
-<button
-    onclick="cerrarModalEstado()"
-    class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-3xl font-bold">
+        <div class="bg-white p-8 rounded-3xl w-full max-w-md relative">
+            <button onclick="cerrarModalEstado()"
+                class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-3xl font-bold">
 
-    &times;
+                &times;
 
-</button>
+            </button>
 
             <h2 class="text-2xl font-bold text-center mb-6">
                 Cambiar Estado
@@ -966,7 +965,6 @@
                     'habitacionSeleccionada'
                 )
                 .value = id;
-
             document
                 .getElementById(
                     'modalEstado'
@@ -974,7 +972,6 @@
                 .classList.remove(
                     'hidden'
                 );
-
             document
                 .getElementById(
                     'modalEstado'
@@ -982,16 +979,12 @@
                 .classList.add(
                     'flex'
                 );
-
         }
-
         async function actualizarEstado(estado) {
-
             const id =
                 document.getElementById(
                     'habitacionSeleccionada'
                 ).value;
-
             await fetch(
                 `http://localhost:5000/api/habitaciones/${id}/estado`,
                 {
@@ -1031,19 +1024,19 @@
     </script>
     <script>
 
-function cerrarModalEstado(){
+        function cerrarModalEstado() {
 
-    document
-        .getElementById('modalEstado')
-        .classList.add('hidden');
+            document
+                .getElementById('modalEstado')
+                .classList.add('hidden');
 
-    document
-        .getElementById('modalEstado')
-        .classList.remove('flex');
+            document
+                .getElementById('modalEstado')
+                .classList.remove('flex');
 
-}
+        }
 
-</script>
+    </script>
 </body>
 
 </html>
