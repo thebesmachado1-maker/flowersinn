@@ -49,11 +49,15 @@
     </script>
     <style>
         .hero-gradient {
-            background: linear-gradient(180deg, rgba(17, 41, 29, 0.7) 0%, rgba(17, 41, 29, 0.88) 100%);
+            background: linear-gradient(180deg,
+                rgba(17, 41, 29, 0.70) 0%,
+                rgba(17, 41, 29, 0.35) 38%,
+                rgba(17, 41, 29, 0.45) 62%,
+                rgba(17, 41, 29, 0.78) 100%);
         }
 
         .text-shadow-lg {
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45), 0 6px 22px rgba(0, 0, 0, 0.55);
         }
     </style>
 </head>
@@ -86,29 +90,26 @@
                     <a href="#servicios" class="hover:text-brand-200 transition">Servicios</a>
                     <a href="#galeria" class="hover:text-brand-200 transition">Instalaciones</a>
                     <a href="#contacto" class="hover:text-brand-200 transition">Contacto</a>
-                    <a href="#Formulario" class="hover:text-brand-200 transition">
-                        Habitaciones
+                    <a href="#Formulario" class="hover:text-brand-200 transition">Habitaciones</a>
+                </div>
+
+                <!-- Botón de consultas por WhatsApp -->
+                <div class="hidden md:flex items-center">
+                    <a href="https://wa.me/?text=Hola%20Flowers%20Hotel%20Inn,%20quisiera%20más%20información"
+                        target="_blank"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-full font-bold transition shadow-md hover:shadow-lg text-xs uppercase flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Consultas
                     </a>
                 </div>
-            </div>
 
-            <!-- Direct Call/WhatsApp buttons -->
-            <div class="hidden lg:flex items-center space-x-3">
-                <a href="https://wa.me/?text=Hola%20Flowers%20Hotel%20Inn,%20quisiera%20más%20información"
-                    target="_blank"
-                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-full font-bold transition shadow-md hover:shadow-lg text-xs uppercase flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-base"></i> Consultas
-                </a>
+                <!-- Mobile Menu Toggle Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" type="button"
+                        class="text-gray-200 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
             </div>
-
-            <!-- Mobile Menu Toggle Button -->
-            <div class="md:hidden flex items-center">
-                <button id="mobile-menu-btn" type="button"
-                    class="text-gray-200 hover:text-white focus:outline-none p-2">
-                    <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
-                </button>
-            </div>
-        </div>
         </div>
 
         <!-- Mobile Menu Container -->
@@ -135,9 +136,13 @@
     <!-- Hero Section: Promotional Banner -->
     <section id="inicio" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80"
-                alt="Flowers Hotel Inn Fachada" class="w-full h-full object-cover"
-                onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/11291d/ffffff?text=Flowers+Hotel+Inn';">
+            <!-- Carrusel de portada: se llena con las fotos de backend/imagenes/portada.
+                 Mientras no haya fotos en esa carpeta se queda la foto de respaldo. -->
+            <div id="heroFotos" class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80"
+                    alt="Flowers Hotel Inn" class="hero-foto absolute inset-0 w-full h-full object-cover"
+                    onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/11291d/ffffff?text=Flowers+Hotel+Inn';">
+            </div>
             <div class="absolute inset-0 hero-gradient"></div>
         </div>
 
@@ -152,7 +157,7 @@
                 FLOWERS HOTEL INN
             </h1>
 
-            <p class="text-xl sm:text-2xl text-brand-100 max-w-3xl mx-auto mb-8 font-light leading-relaxed">
+            <p class="text-xl sm:text-2xl text-white max-w-3xl mx-auto mb-8 font-normal leading-relaxed text-shadow-lg">
                 Ofrece estadía cómoda, segura y confortable en sus instalaciones totalmente equipadas.
             </p>
 
@@ -178,6 +183,16 @@
                 </a>
             </div>
         </div>
+
+        <button id="heroAnterior" type="button" onclick="moverHero(-1, true)" aria-label="Foto anterior"
+            class="hidden absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/25 hover:bg-black/45 text-white/90 items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="heroSiguiente" type="button" onclick="moverHero(1, true)" aria-label="Foto siguiente"
+            class="hidden absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/25 hover:bg-black/45 text-white/90 items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <div id="heroPuntos" class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-20 items-center gap-2"></div>
     </section>
 
     <!-- Rates & Rooms Section -->
@@ -188,293 +203,93 @@
             <h2 class="font-serif text-3xl sm:text-5xl text-emeraldCustom-900 font-bold mt-2 mb-4">Estadías y
                 Habitaciones</h2>
             <div class="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
-            <p class="text-gray-600 text-base">Elija la modalidad que mejor se adapte a su itinerario: por **Noche** o
-                por **24 Horas completas**.</p>
+            <p class="text-gray-600 text-base">Consulte la tarifa por noche de cada tipo de habitación y cuántas hay disponibles en este momento.</p>
         </div>
 
-        <!-- Room Cards Display -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <!-- Tarifas: se llenan desde la base de datos (una tarjeta por tipo de habitación) -->
+        <div id="contenedorTarifas" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"></div>
 
-            <!-- Habitación Sencilla -->
-            <div
-                class="bg-white rounded-3xl overflow-hidden shadow-xl border border-sand-200 hover:border-brand-500 transition duration-300 flex flex-col group">
-                <div class="relative h-60 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80"
-                        alt="Habitación Sencilla"
-                        class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/e8d5cf/7e2012?text=Habitacion+Sencilla';">
-                    <div
-                        class="absolute bottom-4 left-4 bg-emeraldCustom-900/90 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-md">
-                        1 Cama • Confort Individual
-                    </div>
-                </div>
-                <div class="p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-serif text-2xl font-bold text-emeraldCustom-900 mb-2">Habitación Sencilla</h3>
-                        <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-                            Espacio acogedor y tranquilo diseñado para un descanso reparador.
-                        </p>
-
-                        <!-- Price Highlights Box -->
-                        <div class="bg-sand-100 rounded-2xl p-4 space-y-3 mb-6 border border-sand-200">
-                            <div class="flex justify-between items-center pb-2 border-b border-sand-200">
-                                <span class="text-sm font-bold text-gray-700 flex items-center">
-                                    <i class="fa-regular fa-moon text-brand-500 text-lg mr-2"></i> NOCHE:
-                                </span>
-                                <span class="text-2xl font-extrabold text-brand-600">$15.00</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm font-bold text-gray-700 flex items-center">
-                                    <i class="fa-solid fa-clock text-brand-500 text-lg mr-2"></i> 24 HORAS:
-                                </span>
-                                <span class="text-2xl font-extrabold text-emeraldCustom-900">$25.00</span>
-                            </div>
-                        </div>
-
-                        <!-- Included List -->
-                        <ul class="text-xs text-gray-600 space-y-2 mb-6">
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> Baño Privado</li>
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> Aire Acondicionado</li>
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> TV por Cable y WiFi
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Habitación Doble -->
-            <div
-                class="bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-brand-500 transition duration-300 flex flex-col relative group">
-                <div
-                    class="absolute top-4 left-4 z-10 bg-brand-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-lg">
-                    Opción Más Buscada
-                </div>
-                <div class="relative h-60 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80"
-                        alt="Habitación Doble"
-                        class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/e8d5cf/7e2012?text=Habitacion+Doble';">
-                    <div
-                        class="absolute bottom-4 left-4 bg-emeraldCustom-900/90 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-md">
-                        2 Camas • Mayor Espacio
-                    </div>
-                </div>
-                <div class="p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-serif text-2xl font-bold text-emeraldCustom-900 mb-2">Habitación Doble</h3>
-                        <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-                            Ideal para parejas o viajes compartidos con mayor comodidad y amplitud.
-                        </p>
-
-                        <!-- Price Highlights Box -->
-                        <div class="bg-brand-50 rounded-2xl p-4 space-y-3 mb-6 border border-brand-200">
-                            <div class="flex justify-between items-center pb-2 border-b border-brand-200">
-                                <span class="text-sm font-bold text-gray-700 flex items-center">
-                                    <i class="fa-regular fa-moon text-brand-500 text-lg mr-2"></i> NOCHE:
-                                </span>
-                                <span class="text-2xl font-extrabold text-brand-600">$25.00</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm font-bold text-gray-700 flex items-center">
-                                    <i class="fa-solid fa-clock text-brand-500 text-lg mr-2"></i> 24 HORAS:
-                                </span>
-                                <span class="text-2xl font-extrabold text-emeraldCustom-900">$35.00</span>
-                            </div>
-                        </div>
-
-                        <!-- Included List -->
-                        <ul class="text-xs text-gray-600 space-y-2 mb-6">
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> Baño Privado</li>
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> Aire Acondicionado</li>
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> TV por Cable y WiFi
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Habitación Triple -->
-            <div
-                class="bg-white rounded-3xl overflow-hidden shadow-xl border border-sand-200 hover:border-brand-500 transition duration-300 flex flex-col group">
-                <div class="relative h-60 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80"
-                        alt="Habitación Triple"
-                        class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/e8d5cf/7e2012?text=Habitacion+Triple';">
-                    <div
-                        class="absolute bottom-4 left-4 bg-emeraldCustom-900/90 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-md">
-                        3 Camas • Ideal para Familias
-                    </div>
-                </div>
-                <div class="p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-serif text-2xl font-bold text-emeraldCustom-900 mb-2">Habitación Triple</h3>
-                        <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-                            Máxima capacidad y amplitud para grupos familiares o de trabajo.
-                        </p>
-
-                        <!-- Price Highlights Box -->
-                        <div class="bg-sand-100 rounded-2xl p-4 space-y-3 mb-6 border border-sand-200">
-                            <div class="flex justify-between items-center pb-2 border-b border-sand-200">
-                                <span class="text-sm font-bold text-gray-700 flex items-center">
-                                    <i class="fa-regular fa-moon text-brand-500 text-lg mr-2"></i> NOCHE:
-                                </span>
-                                <span class="text-2xl font-extrabold text-brand-600">$30.00</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm font-bold text-gray-700 flex items-center">
-                                    <i class="fa-solid fa-clock text-brand-500 text-lg mr-2"></i> 24 HORAS:
-                                </span>
-                                <span class="text-2xl font-extrabold text-emeraldCustom-900">$45.00</span>
-                            </div>
-                        </div>
-
-                        <!-- Included List -->
-                        <ul class="text-xs text-gray-600 space-y-2 mb-6">
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> Baño Privado</li>
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> Aire Acondicionado</li>
-                            <li class="flex items-center"><i
-                                    class="fa-solid fa-check text-brand-500 mr-2 font-bold"></i> TV por Cable y WiFi
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Summary Price Table (Official Flyer Layout) -->
+        <!-- Resumen de tarifas -->
         <div class="bg-white rounded-3xl p-8 shadow-xl border border-sand-200 max-w-4xl mx-auto overflow-x-auto">
-            <h3 class="font-serif text-2xl font-bold text-center text-emeraldCustom-900 mb-6 uppercase tracking-wider">
-                Resumen de Tarifas Publicitarias
+            <h3 class="font-serif text-2xl font-bold text-center text-emeraldCustom-900 mb-6">
+                Resumen de tarifas
             </h3>
             <table class="w-full text-left border-collapse min-w-[500px]">
                 <thead>
-                    <tr class="bg-emeraldCustom-900 text-white text-sm uppercase">
-                        <th class="p-4 rounded-tl-xl font-bold">Tipo de Habitación</th>
-                        <th class="p-4 font-bold text-center">Noche</th>
-                        <th class="p-4 rounded-tr-xl font-bold text-center">24 Horas</th>
+                    <tr class="bg-emeraldCustom-900 text-white text-sm">
+                        <th class="p-4 rounded-tl-xl font-semibold">Tipo de habitación</th>
+                        <th class="p-4 font-semibold text-center">Tarifa por noche</th>
+                        <th class="p-4 rounded-tr-xl font-semibold text-center">Disponibles</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-sand-200 text-base font-semibold text-gray-800">
-                    <tr class="hover:bg-sand-50 transition">
-                        <td class="p-4 flex items-center gap-3">
-                            <span class="w-3 h-3 rounded-full bg-brand-500"></span> Habitación Sencilla
-                        </td>
-                        <td class="p-4 text-center text-brand-600 font-bold">$15.00</td>
-                        <td class="p-4 text-center text-emeraldCustom-900 font-bold">$25.00</td>
-                    </tr>
-                    <tr class="hover:bg-sand-50 transition">
-                        <td class="p-4 flex items-center gap-3">
-                            <span class="w-3 h-3 rounded-full bg-brand-500"></span> Habitación Doble
-                        </td>
-                        <td class="p-4 text-center text-brand-600 font-bold">$25.00</td>
-                        <td class="p-4 text-center text-emeraldCustom-900 font-bold">$35.00</td>
-                    </tr>
-                    <tr class="hover:bg-sand-50 transition">
-                        <td class="p-4 flex items-center gap-3">
-                            <span class="w-3 h-3 rounded-full bg-brand-500"></span> Habitación Triple
-                        </td>
-                        <td class="p-4 text-center text-brand-600 font-bold">$30.00</td>
-                        <td class="p-4 text-center text-emeraldCustom-900 font-bold">$45.00</td>
-                    </tr>
-                </tbody>
+                <tbody id="tablaTarifas" class="divide-y divide-sand-200 text-base font-semibold text-gray-800"></tbody>
             </table>
         </div>
     </section>
-    <section id="Formulario" class="py-24 bg-sand-100">
+<section id="Formulario" class="py-20 bg-sand-100">
+    <div class="max-w-7xl mx-auto px-4">
 
-        <div class="max-w-7xl mx-auto px-4">
-
-            <h2 class="font-serif text-4xl text-center text-emeraldCustom-900 mb-10">
-                Estado de Habitaciones
-            </h2>
-            <div class="mb-8 text-center">
-
-                <button onclick="abrirModal()"
-                    class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 rounded-2xl shadow-lg font-bold">
-
-                    <i class="fa-solid fa-plus"></i>
-                    Agregar Habitación
-
-                </button>
-
-            </div>
-            <div id="contenedorHabitaciones" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-
-            </div>
-
+        <div class="text-center mb-10">
+            <h2 class="font-serif text-4xl text-emeraldCustom-900">Estado de habitaciones</h2>
+            <div class="w-16 h-0.5 bg-brand-500 mx-auto mt-4 mb-6"></div>
+            <button type="button" onclick="abrirModal()"
+                class="inline-flex items-center gap-2 bg-emeraldCustom-900 hover:bg-emeraldCustom-800 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emeraldCustom-800">
+                <i class="fa-solid fa-plus text-xs"></i> Agregar habitación
+            </button>
         </div>
 
-    </section>
-
-    <div id="modalHabitacion" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
-
-        <div class="bg-white rounded-3xl p-8 w-full max-w-2xl shadow-2xl">
-
-            <div class="flex justify-between items-center mb-6">
-
-                <h2 class="text-2xl font-bold text-emeraldCustom-900">
-                    Nueva Habitación
-                </h2>
-
-                <button onclick="cerrarModal()" class="text-red-500 text-2xl">
-                    ×
-                </button>
-
-            </div>
-
-            <form id="formHabitacion">
-
-                <div class="grid md:grid-cols-2 gap-4">
-
-                    <input type="text" id="numero" placeholder="Número" class="border p-3 rounded-xl">
-
-                    <input type="text" id="tipo" placeholder="Tipo" class="border p-3 rounded-xl">
-
-                    <input type="number" id="precio" placeholder="Precio" class="border p-3 rounded-xl">
-
-                    <select id="estado" class="border p-3 rounded-xl">
-
-                        <option value="DISPONIBLE">
-                            DISPONIBLE
-                        </option>
-
-                        <option value="OCUPADA">
-                            OCUPADA
-                        </option>
-
-                        <option value="MANTENIMIENTO_LIMPIEZA">
-                            MANTENIMIENTO
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="text-center mt-6">
-
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl">
-
-                        Guardar
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
+        <div id="contenedorHabitaciones" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5"></div>
     </div>
+</section>
+
+<!-- Modal: nueva habitación -->
+<div id="modalHabitacion" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50 p-4">
+    <div class="bg-white rounded-xl p-8 w-full max-w-lg shadow-2xl">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-serif text-2xl text-emeraldCustom-900">Nueva habitación</h3>
+            <button type="button" onclick="cerrarModal()" aria-label="Cerrar"
+                class="text-gray-400 hover:text-gray-700 text-2xl leading-none">&times;</button>
+        </div>
+
+        <form id="formHabitacion" class="space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+                <label class="block text-sm text-gray-600">Número
+                    <input type="text" id="numero" required
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:border-emeraldCustom-800">
+                </label>
+                <label class="block text-sm text-gray-600">Tipo
+                    <select id="tipo" required
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:outline-none focus:border-emeraldCustom-800">
+                        <option value="" disabled selected>Selecciona un tipo</option>
+                        <option value="Habitación Sencilla">Habitación Sencilla</option>
+                        <option value="Habitación Doble">Habitación Doble</option>
+                        <option value="Habitación Triple">Habitación Triple</option>
+                    </select>
+                </label>
+                <label class="block text-sm text-gray-600">Precio por noche (USD)
+                    <input type="number" id="precio" min="0" step="0.01" required
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:border-emeraldCustom-800">
+                </label>
+                <label class="block text-sm text-gray-600">Estado
+                    <select id="estado"
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:outline-none focus:border-emeraldCustom-800">
+                        <option value="DISPONIBLE">Disponible</option>
+                        <option value="OCUPADA">Ocupada</option>
+                        <option value="MANTENIMIENTO">Mantenimiento</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+                <button type="button" onclick="cerrarModal()"
+                    class="px-5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100">Cancelar</button>
+                <button type="submit"
+                    class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-emeraldCustom-900 hover:bg-emeraldCustom-800 text-white">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
     <!-- Services & Amenities Section -->
     <section id="servicios" class="bg-emeraldCustom-900 text-white py-24 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -553,34 +368,35 @@
             <div class="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
         </div>
 
+        <!-- Cada tarjeta es un carrusel: se llena con las fotos de backend/imagenes/<area>.
+             Mientras la carpeta esté vacía se queda la foto de respaldo. -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="rounded-3xl overflow-hidden shadow-lg h-64 group relative">
+            <div data-area="recepcion" data-titulo="Recepción & Entrada Principal"
+                class="rounded-3xl overflow-hidden shadow-lg h-64 relative">
                 <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80"
-                    alt="Área de Recepción"
-                    class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                    alt="Área de Recepción" class="absolute inset-0 w-full h-full object-cover"
                     onerror="this.onerror=null; this.src='https://placehold.co/800x600/11291d/ffffff?text=Recepcion';">
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition p-6 flex items-end">
+                <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
                     <span class="text-white font-serif text-lg font-bold">Recepción & Entrada Principal</span>
                 </div>
             </div>
 
-            <div class="rounded-3xl overflow-hidden shadow-lg h-64 group relative">
+            <div data-area="piscina" data-titulo="Área de Piscina Recreativa"
+                class="rounded-3xl overflow-hidden shadow-lg h-64 relative">
                 <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=800&q=80"
-                    alt="Piscina Hotel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                    alt="Piscina Hotel" class="absolute inset-0 w-full h-full object-cover"
                     onerror="this.onerror=null; this.src='https://placehold.co/800x600/11291d/ffffff?text=Piscina';">
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition p-6 flex items-end">
+                <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
                     <span class="text-white font-serif text-lg font-bold">Área de Piscina Recreativa</span>
                 </div>
             </div>
 
-            <div class="rounded-3xl overflow-hidden shadow-lg h-64 group relative">
+            <div data-area="comedor" data-titulo="Comedor & Área de Alimentos"
+                class="rounded-3xl overflow-hidden shadow-lg h-64 relative">
                 <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
-                    alt="Restaurante" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                    alt="Restaurante" class="absolute inset-0 w-full h-full object-cover"
                     onerror="this.onerror=null; this.src='https://placehold.co/800x600/11291d/ffffff?text=Restaurante';">
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition p-6 flex items-end">
+                <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
                     <span class="text-white font-serif text-lg font-bold">Comedor & Área de Alimentos</span>
                 </div>
             </div>
@@ -714,329 +530,392 @@
         });
     </script>
 
-
-
     <script>
+        const API_HABITACIONES = 'http://localhost:5000/api/habitaciones';
+    const ORIGEN_API = new URL(API_HABITACIONES).origin;
+    
+        // Tarifa por noche de cada tipo (la misma de la sección de tarifas)
+    const TARIFAS_NOCHE = {
+        'Habitación Sencilla': 15,
+        'Habitación Doble': 25,
+        'Habitación Triple': 30
+    };
 
-        async function cargarHabitaciones() {
+    document.getElementById('tipo').addEventListener('change', (e) => {
+        document.getElementById('precio').value = TARIFAS_NOCHE[e.target.value].toFixed(2);
+    });
 
-            try {
-                console.log('Cargando habitaciones...');
-                const respuesta = await fetch(
-                    'http://localhost:5000/api/habitaciones'
-                );
+    const ESTADOS = {
+            DISPONIBLE:    { texto: 'Disponible',    badge: 'bg-emerald-50 text-emerald-800 border-emerald-200', punto: 'bg-emerald-600' },
+            OCUPADA:       { texto: 'Ocupada',       badge: 'bg-red-50 text-red-800 border-red-200',             punto: 'bg-red-700' },
+            MANTENIMIENTO: { texto: 'Mantenimiento', badge: 'bg-amber-50 text-amber-800 border-amber-200',       punto: 'bg-amber-600' }
+        };
+    
+        const escapar = (valor) => String(valor ?? '').replace(/[&<>"']/g, (c) => (
+            { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+        ));
+    
+        const modal = document.getElementById('modalHabitacion');
+    
+        function abrirModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+    
+        function cerrarModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    
+        function tarjetaHabitacion(h) {
+            const estado = ESTADOS[h.estado_actual] || ESTADOS.DISPONIBLE;
+            const opciones = Object.entries(ESTADOS).map(([valor, e]) =>
+                `<option value="${valor}" ${valor === h.estado_actual ? 'selected' : ''}>${e.texto}</option>`
+            ).join('');
+    
+            return `
+            <article class="bg-white rounded-xl border border-sand-200 shadow-sm p-5 flex flex-col text-center">
+                <div class="flex justify-end -mt-1 -mr-1">
+                    <button type="button" onclick="eliminarHabitacion(${h.id})" aria-label="Eliminar habitación ${escapar(h.numero)}"
+                        class="text-gray-300 hover:text-red-700 transition p-1">
+                        <i class="fa-regular fa-trash-can text-sm"></i>
+                    </button>
+                </div>
+    
+                <h4 class="font-serif text-2xl text-emeraldCustom-900">Hab. ${escapar(h.numero)}</h4>
+                <p class="text-sm text-gray-500 mt-1">${escapar(h.tipo)}</p>
+                <p class="text-lg font-semibold text-brand-600 mt-3">$${Number(h.precio_referencia).toFixed(2)}</p>
+    
+                <span class="inline-flex items-center justify-center gap-2 self-center mt-4 px-3 py-1 rounded-full border text-xs font-semibold ${estado.badge}">
+                    <span class="w-1.5 h-1.5 rounded-full ${estado.punto}"></span>${estado.texto}
+                </span>
+    
+                <select onchange="cambiarEstado(${h.id}, this.value)" aria-label="Cambiar estado de la habitación ${escapar(h.numero)}"
+                    class="mt-4 w-full text-xs border border-gray-200 rounded-lg p-2 bg-white text-gray-600 focus:outline-none focus:border-emeraldCustom-800">
+                    ${opciones}
+                </select>
+            </article>`;
+        }
+    
+        const TIPOS_INFO = {
+            'Habitación Sencilla': {
+                fotos: [
+                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80',
+                    // Foto de respaldo: solo se usa si no hay fotos en la carpeta imagenes del servidor
+                ],
+                camas: '1 cama · Confort individual',
+                desc: 'Espacio acogedor y tranquilo diseñado para un descanso reparador.'
+            },
+            'Habitación Doble': {
+                fotos: [
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
+                    // Foto de respaldo: solo se usa si no hay fotos en la carpeta imagenes del servidor
+                ],
+                camas: '2 camas · Mayor espacio',
+                desc: 'Ideal para parejas o viajes compartidos con mayor comodidad y amplitud.',
+                destacada: true
+            },
+            'Habitación Triple': {
+                fotos: [
+                    'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80',
+                    // Foto de respaldo: solo se usa si no hay fotos en la carpeta imagenes del servidor
+                ],
+                camas: '3 camas · Ideal para familias',
+                desc: 'Máxima capacidad y amplitud para grupos familiares o de trabajo.'
+            }
+        };
+        const TIPO_GENERICO = { fotos: [], camas: '', desc: 'Habitación equipada para su comodidad.' };
+        const INCLUIDO = ['Baño privado', 'Aire acondicionado', 'TV por cable y WiFi'];
 
-                const habitaciones =
-                    await respuesta.json();
-                console.log(habitaciones);
-                const contenedor =
-                    document.getElementById(
-                        'contenedorHabitaciones'
-                    );
+        function tarjetaTarifa(t) {
+            const info = TIPOS_INFO[t.tipo] || TIPO_GENERICO;
+            const nombre = escapar(t.tipo);
+            const disponibles = Number(t.disponibles);
+            const borde = info.destacada
+                ? 'border-2 border-brand-500 shadow-2xl'
+                : 'border border-sand-200 shadow-xl hover:border-brand-500';
+            const fallback = `https://placehold.co/800x600/e8d5cf/7e2012?text=${encodeURIComponent(t.tipo)}`;
+        const delServidor = (t.imagenes || []).map((f) => ORIGEN_API + f);
+        const fotos = delServidor.length ? delServidor
+            : (info.fotos && info.fotos.length ? info.fotos : [fallback]);
 
-                contenedor.innerHTML = '';
+            return `
+            <div class="bg-white rounded-3xl overflow-hidden ${borde} transition duration-300 flex flex-col relative">
+                ${info.destacada ? '<div class="absolute top-4 left-4 z-10 bg-brand-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">Opción más buscada</div>' : ''}
+                <div class="relative h-60 overflow-hidden" data-galeria data-indice="0">
+            ${fotos.map((src, k) => `<img src="${escapar(src)}" alt="${nombre}, foto ${k + 1}" loading="lazy"
+                class="foto absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${k === 0 ? 'opacity-100' : 'opacity-0'}"
+                onerror="this.onerror=null; this.src='${fallback}';">`).join('')}
+            ${info.camas ? `<div class="absolute bottom-4 left-4 z-10 bg-emeraldCustom-900/90 text-white text-xs font-semibold px-3 py-1.5 rounded-full">${info.camas}</div>` : ''}
+            ${fotos.length > 1 ? `
+            <button type="button" onclick="cambiarFoto(this, -1)" aria-label="Foto anterior"
+                class="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+            <button type="button" onclick="cambiarFoto(this, 1)" aria-label="Foto siguiente"
+                class="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+            <div class="absolute bottom-4 right-4 z-10 flex gap-1.5">
+                ${fotos.map((_, k) => `<span class="punto w-2 h-2 rounded-full ${k === 0 ? 'bg-white' : 'bg-white/50'}"></span>`).join('')}
+            </div>` : ''}
+        </div>
+        <div class="p-6 flex-1 flex flex-col">
+                    <h3 class="font-serif text-2xl font-bold text-emeraldCustom-900 mb-2">${nombre}</h3>
+                    <p class="text-gray-600 text-sm mb-6 leading-relaxed">${info.desc}</p>
 
-                habitaciones.forEach(habitacion => {
-
-                    let color = 'bg-green-500';
-                    let icono = 'fa-bed';
-
-                    if (
-                        habitacion.estado_actual ===
-                        'OCUPADA'
-                    ) {
-                        color = 'bg-red-500';
-                    }
-
-                    if (
-                        habitacion.estado_actual ===
-                        'MANTENIMIENTO'
-                    ) {
-                        color = 'bg-yellow-500';
-                        icono =
-                            'fa-screwdriver-wrench';
-                    }
-
-                    contenedor.innerHTML += `
-
-            <div class="bg-white rounded-3xl shadow-xl p-6 border border-sand-200 hover:scale-105 transition">
-
-                <div class="flex justify-center mb-4">
-
-                    <div class="w-16 h-16 ${color}
-                    rounded-full flex items-center justify-center">
-
-                        <i class="fa-solid ${icono}
-                        text-white text-2xl"></i>
-
+                    <div class="bg-sand-100 rounded-2xl p-4 space-y-3 mb-6 border border-sand-200">
+                        <div class="flex justify-between items-center pb-2 border-b border-sand-200">
+                            <span class="text-sm font-semibold text-gray-700"><i class="fa-regular fa-moon text-brand-500 mr-2"></i>Por noche</span>
+                            <span class="text-2xl font-extrabold text-brand-600">$${Number(t.precio_referencia).toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-semibold text-gray-700"><i class="fa-solid fa-door-open text-brand-500 mr-2"></i>Disponibles</span>
+                            <span class="text-lg font-bold ${disponibles > 0 ? 'text-emeraldCustom-900' : 'text-red-700'}">${disponibles} de ${Number(t.total)}</span>
+                        </div>
                     </div>
 
+                    <ul class="text-xs text-gray-600 space-y-2">
+                        ${INCLUIDO.map(i => `<li class="flex items-center"><i class="fa-solid fa-check text-brand-500 mr-2"></i>${i}</li>`).join('')}
+                    </ul>
                 </div>
+            </div>`;
+        }
 
-                <h4 class="text-center font-bold text-xl text-emeraldCustom-900">
+        function cambiarFoto(boton, paso) {
+            const galeria = boton.closest('[data-galeria]');
+            const fotos = galeria.querySelectorAll('.foto');
+            const puntos = galeria.querySelectorAll('.punto');
+            const actual = (Number(galeria.dataset.indice) + paso + fotos.length) % fotos.length;
 
-                    Hab. ${habitacion.numero}
+            fotos.forEach((f, k) => {
+                f.classList.toggle('opacity-100', k === actual);
+                f.classList.toggle('opacity-0', k !== actual);
+            });
+            puntos.forEach((p, k) => {
+                p.classList.toggle('bg-white', k === actual);
+                p.classList.toggle('bg-white/50', k !== actual);
+            });
+            galeria.dataset.indice = actual;
+        }
 
-                </h4>
+        function filaTarifa(t) {
+            return `
+            <tr>
+                <td class="p-4">${escapar(t.tipo)}</td>
+                <td class="p-4 text-center text-brand-600 font-bold">$${Number(t.precio_referencia).toFixed(2)}</td>
+                <td class="p-4 text-center text-emeraldCustom-900 font-bold">${Number(t.disponibles)} de ${Number(t.total)}</td>
+            </tr>`;
+        }
 
-                <p class="text-center text-gray-600">
+        async function cargarTarifas() {
+            const contenedor = document.getElementById('contenedorTarifas');
+            const tabla = document.getElementById('tablaTarifas');
+            try {
+                const respuesta = await fetch(`${API_HABITACIONES}/tipos`);
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+                const tipos = await respuesta.json();
 
-                    ${habitacion.tipo}
-
-                </p>
-
-                <p class="text-center font-bold text-brand-600 mt-2">
-
-                    $${habitacion.precio_referencia}
-
-                </p>
-
-                <div class="text-center mt-4">
-
-                   <button
-   onclick="abrirModalEstado(${habitacion.id})"
-    class="${color}
-    text-white
-    px-4
-    py-2
-    rounded-full
-    text-sm">
-
-    ${habitacion.estado_actual}
-
-</button>
-
-                </div>
-
-            </div>
-
-            `;
-
-                });
-
+                contenedor.innerHTML = tipos.length
+                    ? tipos.map(tarjetaTarifa).join('')
+                    : '<p class="col-span-full text-center text-gray-500">Las tarifas se publicarán próximamente.</p>';
+                tabla.innerHTML = tipos.map(filaTarifa).join('');
             } catch (error) {
+                console.error('Error cargando tarifas:', error);
+                contenedor.innerHTML = '<p class="col-span-full text-center text-gray-500">No se pudieron cargar las tarifas en este momento.</p>';
+                tabla.innerHTML = '';
+            }
+        }
 
-                console.error(
-                    'Error cargando habitaciones:',
-                    error
-                );
-
+        async function cargarHabitaciones() {
+            const contenedor = document.getElementById('contenedorHabitaciones');
+            try {
+                const respuesta = await fetch(API_HABITACIONES);
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+                const habitaciones = await respuesta.json();
+    
+                contenedor.innerHTML = habitaciones.length
+                    ? habitaciones.map(tarjetaHabitacion).join('')
+                    : '<p class="col-span-full text-center text-gray-500">Aún no hay habitaciones registradas.</p>';
+            } catch (error) {
+                console.error('Error cargando habitaciones:', error);
+                contenedor.innerHTML = '<p class="col-span-full text-center text-red-700">No se pudieron cargar las habitaciones. Verifica que el servidor esté activo.</p>';
             }
 
+            cargarTarifas();
         }
-
-        cargarHabitaciones();
-        document
-            .getElementById(
-                'formHabitacion'
-            )
-            .addEventListener(
-                'submit',
-                async (e) => {
-
-                    e.preventDefault();
-
-                    const datos = {
-
-                        numero:
-                            document.getElementById(
-                                'numero'
-                            ).value,
-
-                        tipo:
-                            document.getElementById(
-                                'tipo'
-                            ).value,
-
-                        precio_referencia:
-                            document.getElementById(
-                                'precio'
-                            ).value,
-
-                        estado_actual:
-                            document.getElementById(
-                                'estado'
-                            ).value
-
-                    };
-
-                    await fetch(
-                        'http://localhost:5000/api/habitaciones',
-                        {
-                            method: 'POST',
-
-                            headers: {
-                                'Content-Type':
-                                    'application/json'
-                            },
-
-                            body: JSON.stringify(
-                                datos
-                            )
-                        }
-                    );
-
-                    document
-                        .getElementById(
-                            'formHabitacion'
-                        )
-                        .reset();
-
-                    cargarHabitaciones();
-
-                }
-            );
-    </script>
-
-    <script>
-
-        function abrirModal() {
-
-            document
-                .getElementById('modalHabitacion')
-                .classList.remove('hidden');
-
-            document
-                .getElementById('modalHabitacion')
-                .classList.add('flex');
-        }
-
-        function cerrarModal() {
-
-            document
-                .getElementById('modalHabitacion')
-                .classList.add('hidden');
-
-            document
-                .getElementById('modalHabitacion')
-                .classList.remove('flex');
-        }
-
-    </script>
-    <div id="modalEstado" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
-
-       <div class="bg-white p-8 rounded-3xl w-full max-w-md relative">
-<button
-    onclick="cerrarModalEstado()"
-    class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-3xl font-bold">
-
-    &times;
-
-</button>
-
-            <h2 class="text-2xl font-bold text-center mb-6">
-                Cambiar Estado
-            </h2>
-            <input type="hidden" id="habitacionSeleccionada">
-            <div class="flex flex-col gap-3">
-                <button onclick="actualizarEstado('DISPONIBLE')" class="bg-green-500 text-white p-3 rounded-xl">
-                    DISPONIBLE
-                </button>
-                <button onclick="actualizarEstado('OCUPADA')" class="bg-red-500 text-white p-3 rounded-xl">
-                    OCUPADA
-
-                </button>
-
-                <button onclick="actualizarEstado('MANTENIMIENTO')" class="bg-yellow-500 text-white p-3 rounded-xl">
-
-                    MANTENIMIENTO
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <script>
-
-        function abrirModalEstado(id) {
-
-            document
-                .getElementById(
-                    'habitacionSeleccionada'
-                )
-                .value = id;
-
-            document
-                .getElementById(
-                    'modalEstado'
-                )
-                .classList.remove(
-                    'hidden'
-                );
-
-            document
-                .getElementById(
-                    'modalEstado'
-                )
-                .classList.add(
-                    'flex'
-                );
-
-        }
-
-        async function actualizarEstado(estado) {
-
-            const id =
-                document.getElementById(
-                    'habitacionSeleccionada'
-                ).value;
-
-            await fetch(
-                `http://localhost:5000/api/habitaciones/${id}/estado`,
-                {
+    
+        async function cambiarEstado(id, estado_actual) {
+            try {
+                const respuesta = await fetch(`${API_HABITACIONES}/${id}/estado`, {
                     method: 'PUT',
-
-                    headers: {
-                        'Content-Type':
-                            'application/json'
-                    },
-
-                    body: JSON.stringify({
-                        estado_actual: estado
-                    })
-                }
-            );
-
-            document
-                .getElementById(
-                    'modalEstado'
-                )
-                .classList.add(
-                    'hidden'
-                );
-
-            document
-                .getElementById(
-                    'modalEstado'
-                )
-                .classList.remove(
-                    'flex'
-                );
-
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ estado_actual })
+                });
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+            } catch (error) {
+                console.error('Error actualizando estado:', error);
+                alert('No se pudo actualizar el estado.');
+            }
             cargarHabitaciones();
+        }
+    
+        async function eliminarHabitacion(id) {
+            if (!confirm('¿Eliminar esta habitación? Esta acción no se puede deshacer.')) return;
+            try {
+                const respuesta = await fetch(`${API_HABITACIONES}/${id}`, { method: 'DELETE' });
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+            } catch (error) {
+                console.error('Error eliminando habitación:', error);
+                alert('No se pudo eliminar la habitación.');
+            }
+            cargarHabitaciones();
+        }
+    
+        document.getElementById('formHabitacion').addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+            const datos = {
+                numero: document.getElementById('numero').value.trim(),
+                tipo: document.getElementById('tipo').value.trim(),
+                precio_referencia: document.getElementById('precio').value,
+                estado_actual: document.getElementById('estado').value
+            };
+    
+            try {
+                const respuesta = await fetch(API_HABITACIONES, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
+                });
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+                e.target.reset();
+                cerrarModal();
+            } catch (error) {
+                console.error('Error guardando habitación:', error);
+                alert('No se pudo guardar la habitación.');
+            }
+            cargarHabitaciones();
+        });
+    
+        // ---------- Carrusel de la portada ----------
+        let heroIndice = 0;
+        let heroTimer = null;
+        const HERO_INTERVALO = 6000;
 
+        function pintarPuntos() {
+            document.querySelectorAll('#heroPuntos .hero-punto').forEach((p, k) => {
+                p.className = `hero-punto h-2 rounded-full transition-all ${k === heroIndice ? 'w-6 bg-white' : 'w-2 bg-white/50'}`;
+            });
         }
 
+        function programarHero() {
+            clearInterval(heroTimer);
+            const hayVarias = document.querySelectorAll('#heroFotos .hero-foto').length > 1;
+            const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (hayVarias && !sinMovimiento) heroTimer = setInterval(() => moverHero(1), HERO_INTERVALO);
+        }
+
+        function moverHero(paso, manual) {
+            const fotos = document.querySelectorAll('#heroFotos .hero-foto');
+            if (fotos.length < 2) return;
+            heroIndice = (heroIndice + paso + fotos.length) % fotos.length;
+            fotos.forEach((f, k) => {
+                f.classList.toggle('opacity-100', k === heroIndice);
+                f.classList.toggle('opacity-0', k !== heroIndice);
+            });
+            pintarPuntos();
+            if (manual) programarHero();
+        }
+
+        function irAHero(k) {
+            moverHero(k - heroIndice, true);
+        }
+
+        function iniciarHero(urls) {
+            heroIndice = 0;
+            document.getElementById('heroFotos').innerHTML = urls.map((src, k) =>
+                `<img src="${escapar(src)}" alt="Flowers Hotel Inn, foto ${k + 1}"
+                    class="hero-foto absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${k === 0 ? 'opacity-100' : 'opacity-0'}">`
+            ).join('');
+
+            const varias = urls.length > 1;
+            ['heroAnterior', 'heroSiguiente', 'heroPuntos'].forEach((id) => {
+                const el = document.getElementById(id);
+                el.classList.toggle('hidden', !varias);
+                el.classList.toggle('flex', varias);
+            });
+            document.getElementById('heroPuntos').innerHTML = urls.map((_, k) =>
+                `<button type="button" onclick="irAHero(${k})" aria-label="Ir a la foto ${k + 1}"></button>`
+            ).join('');
+            document.querySelectorAll('#heroPuntos button').forEach((b) => b.classList.add('hero-punto'));
+            pintarPuntos();
+            programarHero();
+        }
+
+        async function cargarPortada() {
+            try {
+                const respuesta = await fetch(`${ORIGEN_API}/api/portada`);
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+                const fotos = (await respuesta.json()).map((f) => ORIGEN_API + f);
+                if (fotos.length) iniciarHero(fotos);
+            } catch (error) {
+                console.error('Error cargando la portada:', error);
+            }
+        }
+
+        // Pausa el carrusel mientras el cursor está sobre la portada
+        const portada = document.getElementById('inicio');
+        portada.addEventListener('mouseenter', () => clearInterval(heroTimer));
+        portada.addEventListener('mouseleave', programarHero);
+
+        // ---------- Galería de instalaciones (un carrusel por área) ----------
+        function contenidoGaleria(fotos, titulo) {
+            const nombre = escapar(titulo);
+            const varias = fotos.length > 1;
+            return `
+                ${fotos.map((src, k) => `<img src="${escapar(src)}" alt="${nombre}, foto ${k + 1}" loading="lazy"
+                    class="foto absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${k === 0 ? 'opacity-100' : 'opacity-0'}">`).join('')}
+                <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none">
+                    <span class="text-white font-serif text-lg font-bold">${nombre}</span>
+                </div>
+                ${varias ? `
+                <button type="button" onclick="cambiarFoto(this, -1)" aria-label="Foto anterior"
+                    class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                </button>
+                <button type="button" onclick="cambiarFoto(this, 1)" aria-label="Foto siguiente"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+                <div class="absolute bottom-6 right-6 z-20 flex gap-1.5">
+                    ${fotos.map((_, k) => `<span class="punto w-2 h-2 rounded-full ${k === 0 ? 'bg-white' : 'bg-white/50'}"></span>`).join('')}
+                </div>` : ''}`;
+        }
+
+        async function cargarGaleria() {
+            try {
+                const respuesta = await fetch(`${ORIGEN_API}/api/galeria`);
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+                const porArea = await respuesta.json();
+
+                document.querySelectorAll('[data-area]').forEach((tarjeta) => {
+                    const fotos = (porArea[tarjeta.dataset.area] || []).map((f) => ORIGEN_API + f);
+                    if (!fotos.length) return;
+                    tarjeta.setAttribute('data-galeria', '');
+                    tarjeta.dataset.indice = 0;
+                    tarjeta.innerHTML = contenidoGaleria(fotos, tarjeta.dataset.titulo);
+                });
+            } catch (error) {
+                console.error('Error cargando la galería:', error);
+            }
+        }
+
+        cargarPortada();
+        cargarGaleria();
+        cargarHabitaciones();
     </script>
-    <script>
 
-function cerrarModalEstado(){
-
-    document
-        .getElementById('modalEstado')
-        .classList.add('hidden');
-
-    document
-        .getElementById('modalEstado')
-        .classList.remove('flex');
-
-}
-
-</script>
 </body>
 
 </html>
