@@ -866,12 +866,7 @@
             });
         }
 
-        function programarHero() {
-            clearInterval(heroTimer);
-            const hayVarias = document.querySelectorAll('#heroFotos .hero-foto').length > 1;
-            const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (hayVarias && !sinMovimiento) heroTimer = setInterval(() => moverHero(1), HERO_INTERVALO);
-        }
+
 
         function moverHero(paso, manual) {
             const fotos = document.querySelectorAll('#heroFotos .hero-foto');
@@ -941,53 +936,14 @@
                     class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
                     <i class="fa-solid fa-chevron-left text-xs"></i>
                 </button>
-                <button type="button" onclick="cambiarFoto(this, 1)" aria-label="Foto siguiente"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
-                    <i class="fa-solid fa-chevron-right text-xs"></i>
+
                 </button>
                 <div class="absolute bottom-6 right-6 z-20 flex gap-1.5">
                     ${fotos.map((_, k) => `<span class="punto w-2 h-2 rounded-full ${k === 0 ? 'bg-white' : 'bg-white/50'}"></span>`).join('')}
                 </div>` : ''}`;
         }
 
-        async function cargarGaleria() {
-            try {
-                const respuesta = await fetch(`${ORIGEN_API}/api/galeria`);
-                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
-                const porArea = await respuesta.json();
 
-                document.querySelectorAll('[data-area]').forEach((tarjeta) => {
-                    const fotos = (porArea[tarjeta.dataset.area] || []).map((f) => ORIGEN_API + f);
-                    if (!fotos.length) return;
-                    tarjeta.setAttribute('data-galeria', '');
-                    tarjeta.dataset.indice = 0;
-                    tarjeta.innerHTML = contenidoGaleria(fotos, tarjeta.dataset.titulo);
-                });
-            } catch (error) {
-                console.error('Error cargando la galería:', error);
-            }
-        }
-
-        // En pantallas táctiles no hay "pasar el cursor": se muestra/oculta al tocar el texto
-        document.getElementById('accesoGrupo').addEventListener('click', (e) => {
-            if (window.matchMedia('(hover: none)').matches && !e.target.closest('button')) {
-                e.currentTarget.classList.toggle('activo');
-            }
-        });
-
-        // ---------- Login de empleados ----------
-        function abrirModalLogin() {
-            const modalLogin = document.getElementById('modalLogin');
-            modalLogin.classList.remove('hidden');
-            modalLogin.classList.add('flex');
-            document.getElementById('loginUsuario').focus();
-        }
-
-        function cerrarModalLogin() {
-            const modalLogin = document.getElementById('modalLogin');
-            modalLogin.classList.add('hidden');
-            modalLogin.classList.remove('flex');
-        }
 
         async function manejarLogin(e) {
             e.preventDefault();
