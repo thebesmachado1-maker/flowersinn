@@ -1,37 +1,20 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
-const pool = require('./config/db');
+const path = require('path');
 
 const hotelRoutes = require('./ruta/HotelRuta');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+/* MIDDLEWARES */
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/test-db', async (req, res) => {
-
-  try {
-
-    const result = await pool.query('SELECT NOW()');
-
-    res.json({
-      mensaje: '¡Conexión a PostgreSQL funcionando perfectamente!',
-      hora_servidor: result.rows[0].now
-    });
-
-  } catch (error) {
-
-    console.error(error);
-
-    res.status(500).json({
-      error: error.message
-    });
-
-  }
-
-});
+/* IMÁGENES (carpeta backend/imagenes) */
+app.use('/imagenes', express.static(path.join(__dirname, '..', 'imagenes')));
 
 app.get('/', (req, res) => {
   res.send('Servidor Backend funcionando');

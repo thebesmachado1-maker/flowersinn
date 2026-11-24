@@ -2,94 +2,55 @@ const pool = require('../config/db');
 
 class HotelModelo {
 
-    // Listar habitaciones
-   static async obtenerHabitaciones() {
-
-    const result = await pool.query(
-        'SELECT * FROM habitaciones'
-    );
-
-    return result.rows;
-}
-
-    // Buscar por ID
-    static async obtenerHabitacionPorId(id) {
-        const result = await pool.query(
-            'SELECT * FROM habitaciones WHERE id = $1',
-            [id]
+    static async obtenerHabitaciones() {
+        const { rows } = await pool.query(
+            'SELECT * FROM habitaciones ORDER BY numero'
         );
-
-        return result.rows[0];
+        return rows;
     }
 
-    // Crear habitación
-    static async crearHabitacion(
-    numero,
-    tipo,
-    precio_referencia,
-    estado_actual
-) {
+    // Una fila por tipo de habitación: tarifa de referencia y disponibilidad
+    static async obtenerTipos() {
+        const { rows } = await pool.query(
+            `SELECT tipo,
+                    MIN(precio_referencia) AS precio_referencia,
+                    COUNT(*) AS total,
+                    COUNT(*) FILTER (WHERE estado_actual = 'DISPONIBLE') AS disponibles
+             FROM habitaciones
+             GROUP BY tipo
+             ORDER BY MIN(precio_referencia)`
+        );
+        return rows;
+    }
 
-    const result = await pool.query(
+    static async crearHabitacion({ numero, tipo, precio_referencia, estado_actual }) {
+        const { rows } = await pool.query(
+            `INSERT INTO habitaciones (numero, tipo, precio_referencia, estado_actual)
+             VALUES ($1, $2, $3, $4)
+             RETURNING *`,
+            [numero, tipo, precio_referencia, estado_actual]
+        );
+        return rows[0];
+    }
 
-        `INSERT INTO habitaciones
-        (
-            numero,
-            tipo,
-            precio_referencia,
-            estado_actual
-        )
-        VALUES($1,$2,$3,$4)
-        RETURNING *`,
+    static async actualizarEstado(id, estado_actual) {
+        const { rows } = await pool.query(
+            `UPDATE habitaciones
+             SET estado_actual = $1
+             WHERE id = $2
+             RETURNING *`,
+            [estado_actual, id]
+        );
+        return rows[0];
+    }
 
-        [
-            numero,
-            tipo,
-            precio_referencia,
-            estado_actual
-        ]
-
-    );
-
-    return result.rows[0];
-}
-    // Actualizar
-    static async actualizarEstado(
-    id,
-    estado_actual
-){
-
-    const resultado =
-    await pool.query(
-
-        `
-        UPDATE habitaciones
-        SET estado_actual = $1
-        WHERE id = $2
-        RETURNING *
-        `,
-
-        [
-            estado_actual,
-            id
-        ]
-
-    );
-
-    return resultado.rows[0];
-
-}
-    // Eliminar
     static async eliminarHabitacion(id) {
-
-        await pool.query(
-            'DELETE FROM habitaciones WHERE id=$1',
+        const { rowCount } = await pool.query(
+            'DELETE FROM habitaciones WHERE id = $1',
             [id]
         );
-
-        return true;
+        return rowCount > 0;
     }
 }
 
 module.exports = HotelModelo;
-
