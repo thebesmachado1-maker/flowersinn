@@ -72,6 +72,11 @@
             transition-delay: 0s;
         }
 
+        /* Contenido exclusivo del personal: oculto hasta iniciar sesión */
+        body:not(.con-sesion) .solo-personal {
+            display: none !important;
+        }
+
         .text-shadow-lg {
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45), 0 6px 22px rgba(0, 0, 0, 0.55);
         }
@@ -106,7 +111,7 @@
                     <a href="#servicios" class="hover:text-brand-200 transition">Servicios</a>
                     <a href="#galeria" class="hover:text-brand-200 transition">Instalaciones</a>
                     <a href="#contacto" class="hover:text-brand-200 transition">Contacto</a>
-                    <a href="#Formulario" class="hover:text-brand-200 transition">Habitaciones</a>
+                    <a href="#Formulario" class="solo-personal hover:text-brand-200 transition">Habitaciones</a>
                 </div>
 
                 <!-- Botón de consultas por WhatsApp -->
@@ -140,6 +145,7 @@
                     class="block py-2 text-gray-200 hover:text-white font-medium mobile-link">Instalaciones</a>
                 <a href="#contacto" class="block py-2 text-gray-200 hover:text-white font-medium mobile-link">Contacto y
                     Ubicación</a>
+                <a href="#Formulario" class="solo-personal block py-2 text-gray-200 hover:text-white font-medium mobile-link">Habitaciones (personal)</a>
                 <a href="https://wa.me/?text=Hola%20Flowers%20Hotel%20Inn,%20quisiera%20más%20información"
                     target="_blank"
                     class="inline-block mt-3 w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow mobile-link">
@@ -225,8 +231,8 @@
         <!-- Tarifas: se llenan desde la base de datos (una tarjeta por tipo de habitación) -->
         <div id="contenedorTarifas" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"></div>
 
-        <!-- Resumen de tarifas -->
-        <div class="bg-white rounded-3xl p-8 shadow-xl border border-sand-200 max-w-4xl mx-auto overflow-x-auto">
+        <!-- Resumen de tarifas (solo visible para el personal con sesión iniciada) -->
+        <div class="solo-personal bg-white rounded-3xl p-8 shadow-xl border border-sand-200 max-w-4xl mx-auto overflow-x-auto">
             <h3 class="font-serif text-2xl font-bold text-center text-emeraldCustom-900 mb-6">
                 Resumen de tarifas
             </h3>
@@ -242,8 +248,17 @@
             </table>
         </div>
     </section>
-<section id="Formulario" class="py-20 bg-sand-100">
+<!-- Estado de habitaciones (solo visible para el personal con sesión iniciada) -->
+<section id="Formulario" class="solo-personal py-20 bg-sand-100">
     <div class="max-w-7xl mx-auto px-4">
+
+        <div class="flex justify-end items-center gap-4 mb-6 text-sm text-gray-600">
+            <span><i class="fa-regular fa-user mr-1"></i> <span id="nombreSesion"></span></span>
+            <button type="button" onclick="cerrarSesion()"
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 hover:bg-white hover:text-red-700 hover:border-red-300 text-xs font-semibold transition">
+                <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+            </button>
+        </div>
 
         <div class="text-center mb-10">
             <h2 class="font-serif text-4xl text-emeraldCustom-900">Estado de habitaciones</h2>
@@ -516,9 +531,9 @@
                 <div id="accesoGrupo" class="acceso-grupo flex flex-col items-center gap-3 px-4 py-1">
                     <p>&copy; <span id="year"></span> Flowers Hotel Inn. Todos los derechos reservados.</p>
 
-                    <button type="button" onclick="abrirModalLogin()" title="Staff"
+                    <button type="button" onclick="accesoPersonal()" title="Staff"
                         class="acceso-personal inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-gray-200 text-xs font-semibold hover:bg-white/10 hover:border-white/40">
-                        <i class="fa-solid fa-lock text-[10px]"></i> Acceso del personal
+                        <i id="accesoIcono" class="fa-solid fa-lock text-[10px]"></i> <span id="accesoEtiqueta">Acceso del personal</span>
                     </button>
                 </div>
             </div>
@@ -866,7 +881,12 @@
             });
         }
 
-
+        function programarHero() {
+            clearInterval(heroTimer);
+            const hayVarias = document.querySelectorAll('#heroFotos .hero-foto').length > 1;
+            const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (hayVarias && !sinMovimiento) heroTimer = setInterval(() => moverHero(1), HERO_INTERVALO);
+        }
 
         function moverHero(paso, manual) {
             const fotos = document.querySelectorAll('#heroFotos .hero-foto');
@@ -936,14 +956,90 @@
                     class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
                     <i class="fa-solid fa-chevron-left text-xs"></i>
                 </button>
-
+                <button type="button" onclick="cambiarFoto(this, 1)" aria-label="Foto siguiente"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
                 </button>
                 <div class="absolute bottom-6 right-6 z-20 flex gap-1.5">
                     ${fotos.map((_, k) => `<span class="punto w-2 h-2 rounded-full ${k === 0 ? 'bg-white' : 'bg-white/50'}"></span>`).join('')}
                 </div>` : ''}`;
         }
 
+        async function cargarGaleria() {
+            try {
+                const respuesta = await fetch(`${ORIGEN_API}/api/galeria`);
+                if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
+                const porArea = await respuesta.json();
 
+                document.querySelectorAll('[data-area]').forEach((tarjeta) => {
+                    const fotos = (porArea[tarjeta.dataset.area] || []).map((f) => ORIGEN_API + f);
+                    if (!fotos.length) return;
+                    tarjeta.setAttribute('data-galeria', '');
+                    tarjeta.dataset.indice = 0;
+                    tarjeta.innerHTML = contenidoGaleria(fotos, tarjeta.dataset.titulo);
+                });
+            } catch (error) {
+                console.error('Error cargando la galería:', error);
+            }
+        }
+
+        // En pantallas táctiles no hay "pasar el cursor": se muestra/oculta al tocar el texto
+        document.getElementById('accesoGrupo').addEventListener('click', (e) => {
+            if (window.matchMedia('(hover: none)').matches && !e.target.closest('button')) {
+                e.currentTarget.classList.toggle('activo');
+            }
+        });
+
+        // ---------- Sesión del personal ----------
+        const CLAVE_SESION = 'flowers_sesion';
+
+        function leerSesion() {
+            try { return JSON.parse(sessionStorage.getItem(CLAVE_SESION)); } catch { return null; }
+        }
+
+        let sesion = leerSesion();
+
+        function guardarSesion(usuario) {
+            sesion = { usuario };
+            try { sessionStorage.setItem(CLAVE_SESION, JSON.stringify(sesion)); } catch { /* sin almacenamiento */ }
+        }
+
+        // Muestra u oculta lo exclusivo del personal y ajusta el botón del pie
+        function actualizarVistaSesion() {
+            const activa = !!sesion;
+            document.body.classList.toggle('con-sesion', activa);
+            document.getElementById('nombreSesion').textContent = activa ? sesion.usuario : '';
+            document.getElementById('accesoEtiqueta').textContent = activa ? 'Cerrar sesión' : 'Acceso del personal';
+            document.getElementById('accesoIcono').className =
+                `fa-solid ${activa ? 'fa-right-from-bracket' : 'fa-lock'} text-[10px]`;
+        }
+
+        function accesoPersonal() {
+            if (sesion) cerrarSesion(); else abrirModalLogin();
+        }
+
+        function cerrarSesion() {
+            sesion = null;
+            try { sessionStorage.removeItem(CLAVE_SESION); } catch { /* sin almacenamiento */ }
+            actualizarVistaSesion();
+            document.getElementById('contenedorHabitaciones').innerHTML = '';
+            cargarTarifas();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ---------- Login de empleados ----------
+        function abrirModalLogin() {
+            const modalLogin = document.getElementById('modalLogin');
+            modalLogin.classList.remove('hidden');
+            modalLogin.classList.add('flex');
+            document.getElementById('loginUsuario').focus();
+        }
+
+        function cerrarModalLogin() {
+            const modalLogin = document.getElementById('modalLogin');
+            modalLogin.classList.add('hidden');
+            modalLogin.classList.remove('flex');
+        }
 
         async function manejarLogin(e) {
             e.preventDefault();
@@ -959,10 +1055,12 @@
                 const data = await respuesta.json().catch(() => ({}));
 
                 if (respuesta.ok) {
-                    alert('¡Bienvenido al sistema!');
+                    guardarSesion((data.usuario && data.usuario.usuario) || usuario);
                     document.getElementById('formLogin').reset();
                     cerrarModalLogin();
-                    // Aquí puedes redirigir al panel de administración o mostrar opciones de empleado
+                    actualizarVistaSesion();
+                    cargarHabitaciones();
+                    document.getElementById('Formulario').scrollIntoView({ behavior: 'smooth' });
                 } else {
                     alert('Error: ' + (data.error || 'No se pudo iniciar sesión'));
                 }
@@ -971,11 +1069,11 @@
             }
         }
 
+        actualizarVistaSesion();
         cargarPortada();
         cargarGaleria();
-        cargarHabitaciones();
+        if (sesion) cargarHabitaciones(); else cargarTarifas();
     </script>
-
 </body>
 
 </html>
