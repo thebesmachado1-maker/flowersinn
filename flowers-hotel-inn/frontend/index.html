@@ -116,8 +116,8 @@
 
                 <!-- Botón de consultas por WhatsApp -->
                 <div class="hidden md:flex items-center">
-                    <a href="https://wa.me/50375618824?text=Hola%2C%20me%20comunico%20desde%20la%20p%C3%A1gina%20de%20Flowers%20Hotel%20Inn.%20Quisiera%20informaci%C3%B3n%20sobre%20habitaciones%2C%20tarifas%20y%20disponibilidad."
-                        target="_blank" rel="noopener noreferrer"
+                    <a href="https://wa.me/?text=Hola%20Flowers%20Hotel%20Inn,%20quisiera%20más%20información"
+                        target="_blank"
                         class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-full font-bold transition shadow-md hover:shadow-lg text-xs uppercase flex items-center gap-2">
                         <i class="fa-brands fa-whatsapp text-base"></i> Consultas
                     </a>
@@ -146,8 +146,8 @@
                 <a href="#contacto" class="block py-2 text-gray-200 hover:text-white font-medium mobile-link">Contacto y
                     Ubicación</a>
                 <a href="#Formulario" class="solo-personal block py-2 text-gray-200 hover:text-white font-medium mobile-link">Habitaciones (personal)</a>
-                <a href="https://wa.me/50375618824?text=Hola%2C%20me%20comunico%20desde%20la%20p%C3%A1gina%20de%20Flowers%20Hotel%20Inn.%20Quisiera%20informaci%C3%B3n%20sobre%20habitaciones%2C%20tarifas%20y%20disponibilidad."
-                    target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/?text=Hola%20Flowers%20Hotel%20Inn,%20quisiera%20más%20información"
+                    target="_blank"
                     class="inline-block mt-3 w-full bg-emerald-600 text-white py-3 rounded-xl font-bold shadow mobile-link">
                     <i class="fa-brands fa-whatsapp mr-2"></i> Contactar por WhatsApp
                 </a>
@@ -447,7 +447,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-12">
                 <!-- Direct Call -->
-                <a href="tel:+50375618824"
+                <a href="tel:+50300000000"
                     class="bg-white p-6 rounded-3xl shadow-lg border border-sand-200 hover:border-brand-500 transition flex items-center justify-center gap-4 group">
                     <div
                         class="w-12 h-12 rounded-full bg-brand-500 text-white flex items-center justify-center text-xl group-hover:scale-110 transition">
@@ -460,8 +460,8 @@
                 </a>
 
                 <!-- WhatsApp Chat -->
-                <a href="https://wa.me/50360835698?text=Hola%2C%20me%20comunico%20desde%20la%20p%C3%A1gina%20de%20Flowers%20Hotel%20Inn.%20Quisiera%20informaci%C3%B3n%20sobre%20habitaciones%2C%20tarifas%20y%20disponibilidad."
-                    target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/?text=Hola%20Flowers%20Hotel%20Inn,%20deseo%20consultar%20información"
+                    target="_blank"
                     class="bg-white p-6 rounded-3xl shadow-lg border border-sand-200 hover:border-emerald-500 transition flex items-center justify-center gap-4 group">
                     <div
                         class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center text-2xl group-hover:scale-110 transition">
@@ -603,7 +603,7 @@
     </script>
 
     <script>
-        const API_HABITACIONES = 'https://hotel-wkhu.onrender.com/api/habitaciones';
+       const API_HABITACIONES = 'https://hotel-wkhu.onrender.com/api/habitaciones';
 const ORIGEN_API = new URL(API_HABITACIONES).origin;
     
         // Tarifa por noche de cada tipo (la misma de la sección de tarifas)
@@ -1074,7 +1074,6 @@ const ORIGEN_API = new URL(API_HABITACIONES).origin;
         cargarGaleria();
         if (sesion) cargarHabitaciones(); else cargarTarifas();
     </script>
-
 </body>
 
 </html>
