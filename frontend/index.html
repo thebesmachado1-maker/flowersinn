@@ -152,7 +152,7 @@
     <section id="inicio" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div id="heroFotos" class="absolute inset-0">
-                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/individual-standard/matrimonial.jpg"
+                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/portada/p2.jpg"
                     alt="Flowers Hotel Inn" class="hero-foto absolute inset-0 w-full h-full object-cover"
                     onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80'; } else { this.onerror = null; this.src = 'https://placehold.co/1920x1080/11291d/ffffff?text=Flowers+Hotel+Inn'; }">
             </div>
@@ -382,30 +382,30 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div data-area="recepcion" data-titulo="Recepción & Entrada Principal"
+            <div data-area="recepcion" data-titulo="Recepción & Entrada Principal" data-galeria data-indice="0"
                 class="rounded-3xl overflow-hidden shadow-lg h-64 relative">
-                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/individual-standard/matrimonial.jpg"
-                    alt="Área de Recepción" class="foto absolute inset-0 w-full h-full object-cover"
+                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/recepcion/ENTRADA.jpg"
+                    alt="Área de Recepción, foto 1" class="foto absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100"
                     onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80'; } else { this.onerror = null; this.src = 'https://placehold.co/800x600/11291d/ffffff?text=Recepcion'; }">
                 <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none">
                     <span class="text-white font-serif text-lg font-bold">Recepción & Entrada Principal</span>
                 </div>
             </div>
 
-            <div data-area="piscina" data-titulo="Área de Piscina Recreativa"
+            <div data-area="piscina" data-titulo="Área de Piscina Recreativa" data-galeria data-indice="0"
                 class="rounded-3xl overflow-hidden shadow-lg h-64 relative">
-                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/individual-standard/matrimonial.jpg"
-                    alt="Piscina Hotel" class="foto absolute inset-0 w-full h-full object-cover"
+                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/piscina/PI2.jpg"
+                    alt="Piscina Hotel, foto 1" class="foto absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100"
                     onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=800&q=80'; } else { this.onerror = null; this.src = 'https://placehold.co/800x600/11291d/ffffff?text=Piscina'; }">
                 <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none">
                     <span class="text-white font-serif text-lg font-bold">Área de Piscina Recreativa</span>
                 </div>
             </div>
 
-            <div data-area="comedor" data-titulo="Comedor & Área de Alimentos"
+            <div data-area="comedor" data-titulo="Comedor & Área de Alimentos" data-galeria data-indice="0"
                 class="rounded-3xl overflow-hidden shadow-lg h-64 relative">
-                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/individual-standard/matrimonial.jpg"
-                    alt="Restaurante" class="foto absolute inset-0 w-full h-full object-cover"
+                <img src="https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes/comedor/ALIMENROS.jpg"
+                    alt="Restaurante, foto 1" class="foto absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100"
                     onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80'; } else { this.onerror = null; this.src = 'https://placehold.co/800x600/11291d/ffffff?text=Restaurante'; }">
                 <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none">
                     <span class="text-white font-serif text-lg font-bold">Comedor & Área de Alimentos</span>
@@ -576,6 +576,28 @@
         const ORIGEN_API = new URL(API_HABITACIONES).origin;
         const GITHUB_IMG_BASE = 'https://raw.githubusercontent.com/thebesmachado1-maker/flowersinn/master/backend/imagenes';
 
+        const FOTOS_PORTADA_GITHUB = [
+            `${GITHUB_IMG_BASE}/portada/p2.jpg`,
+            `${GITHUB_IMG_BASE}/portada/p4.jpg`,
+            `${GITHUB_IMG_BASE}/portada/p8.jpg`
+        ];
+
+        const FOTOS_GALERIA_GITHUB = {
+            recepcion: [
+                `${GITHUB_IMG_BASE}/recepcion/ENTRADA.jpg`,
+                `${GITHUB_IMG_BASE}/recepcion/ENTRADA1.jpg`,
+                `${GITHUB_IMG_BASE}/recepcion/ENTRADA2.jpg`,
+                `${GITHUB_IMG_BASE}/recepcion/RESEPCION.jpg`
+            ],
+            piscina: [
+                `${GITHUB_IMG_BASE}/piscina/PI2.jpg`,
+                `${GITHUB_IMG_BASE}/piscina/PI3.jpg`
+            ],
+            comedor: [
+                `${GITHUB_IMG_BASE}/comedor/ALIMENROS.jpg`
+            ]
+        };
+
         function resolverUrlImagen(ruta, respaldo) {
             if (!ruta) return respaldo;
             if (/^https?:\/\//i.test(ruta)) return ruta;
@@ -650,21 +672,18 @@
             </article>`;
         }
 
-        const FOTO_GITHUB_PRINCIPAL = `${GITHUB_IMG_BASE}/individual-standard/matrimonial.jpg`;
-
         const TIPOS_INFO = {
             'Habitación Sencilla': {
                 fotos: [
-                    FOTO_GITHUB_PRINCIPAL,
-                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80'
+                    `${GITHUB_IMG_BASE}/individual-standard/matrimonial.jpg`,
+                    `${GITHUB_IMG_BASE}/individual-standard/matrimonial2.jpg`
                 ],
                 camas: '1 cama · Confort individual',
                 desc: 'Espacio acogedor y tranquilo diseñado para un descanso reparador.'
             },
             'Habitación Doble': {
                 fotos: [
-                    FOTO_GITHUB_PRINCIPAL,
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'
+                    `${GITHUB_IMG_BASE}/doble-matrimonial/doble.jpg`
                 ],
                 camas: '2 camas · Mayor espacio',
                 desc: 'Ideal para parejas o viajes compartidos con mayor comodidad y amplitud.',
@@ -672,15 +691,15 @@
             },
             'Habitación Triple': {
                 fotos: [
-                    FOTO_GITHUB_PRINCIPAL,
-                    'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80'
+                    `${GITHUB_IMG_BASE}/habitacion-triple/triple.jpg`,
+                    `${GITHUB_IMG_BASE}/habitacion-triple/triple1.jpg`
                 ],
                 camas: '3 camas · Ideal para familias',
                 desc: 'Máxima capacidad y amplitud para grupos familiares o de trabajo.'
             }
         };
         const TIPO_GENERICO = {
-            fotos: [FOTO_GITHUB_PRINCIPAL],
+            fotos: [`${GITHUB_IMG_BASE}/individual-standard/matrimonial.jpg`],
             camas: '',
             desc: 'Habitación equipada para su comodidad.'
         };
@@ -694,7 +713,7 @@
                 ? 'border-2 border-brand-500 shadow-2xl'
                 : 'border border-sand-200 shadow-xl hover:border-brand-500';
             const fallback = `https://placehold.co/800x600/e8d5cf/7e2012?text=${encodeURIComponent(t.tipo)}`;
-            const respaldoLocal = (info.fotos && info.fotos[1]) || FOTO_GITHUB_PRINCIPAL;
+            const respaldoLocal = (info.fotos && info.fotos[0]) || `${GITHUB_IMG_BASE}/individual-standard/matrimonial.jpg`;
             const delServidor = (t.imagenes || []).map((f) => resolverUrlImagen(f, respaldoLocal));
             const fotos = delServidor.length ? delServidor
                 : (info.fotos && info.fotos.length ? info.fotos : [fallback]);
@@ -894,10 +913,11 @@
 
         function iniciarHero(urls) {
             heroIndice = 0;
+            const respaldoHero = FOTOS_PORTADA_GITHUB[0];
             document.getElementById('heroFotos').innerHTML = urls.map((src, k) =>
                 `<img src="${escapar(src)}" alt="Flowers Hotel Inn, foto ${k + 1}"
                     class="hero-foto absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${k === 0 ? 'opacity-100' : 'opacity-0'}"
-                    onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = '${escapar(FOTO_GITHUB_PRINCIPAL)}'; } else { this.onerror = null; this.src = 'https://placehold.co/1920x1080/11291d/ffffff?text=Flowers+Hotel+Inn'; }">`
+                    onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = '${escapar(respaldoHero)}'; } else { this.onerror = null; this.src = 'https://placehold.co/1920x1080/11291d/ffffff?text=Flowers+Hotel+Inn'; }">`
             ).join('');
 
             const varias = urls.length > 1;
@@ -915,10 +935,11 @@
         }
 
         async function cargarPortada() {
+            iniciarHero(FOTOS_PORTADA_GITHUB);
             try {
                 const respuesta = await fetch(`${ORIGEN_API}/api/portada`);
                 if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
-                const fotos = (await respuesta.json()).map((f) => resolverUrlImagen(f, FOTO_GITHUB_PRINCIPAL));
+                const fotos = (await respuesta.json()).map((f) => resolverUrlImagen(f, FOTOS_PORTADA_GITHUB[0]));
                 if (fotos.length) iniciarHero(fotos);
             } catch (error) {
                 console.error('Error cargando la portada:', error);
@@ -930,13 +951,13 @@
         portada.addEventListener('mouseleave', programarHero);
 
         // ---------- Galería de instalaciones ----------
-        function contenidoGaleria(fotos, titulo) {
+        function contenidoGaleria(fotos, titulo, respaldoArea) {
             const nombre = escapar(titulo);
             const varias = fotos.length > 1;
             return `
                 ${fotos.map((src, k) => `<img src="${escapar(src)}" alt="${nombre}, foto ${k + 1}" loading="lazy"
                     class="foto absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${k === 0 ? 'opacity-100' : 'opacity-0'}"
-                    onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = '${escapar(FOTO_GITHUB_PRINCIPAL)}'; } else { this.onerror = null; this.src = 'https://placehold.co/800x600/11291d/ffffff?text=Flowers+Hotel+Inn'; }">`).join('')}
+                    onerror="if (!this.dataset.fb) { this.dataset.fb = '1'; this.src = '${escapar(respaldoArea)}'; } else { this.onerror = null; this.src = 'https://placehold.co/800x600/11291d/ffffff?text=Flowers+Hotel+Inn'; }">`).join('')}
                 <div class="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none">
                     <span class="text-white font-serif text-lg font-bold">${nombre}</span>
                 </div>
@@ -954,18 +975,32 @@
                 </div>` : ''}`;
         }
 
+        function aplicarGaleriaLocal() {
+            document.querySelectorAll('[data-area]').forEach((tarjeta) => {
+                const area = tarjeta.dataset.area;
+                const fotos = FOTOS_GALERIA_GITHUB[area] || [];
+                if (!fotos.length) return;
+                tarjeta.setAttribute('data-galeria', '');
+                tarjeta.dataset.indice = 0;
+                tarjeta.innerHTML = contenidoGaleria(fotos, tarjeta.dataset.titulo, fotos[0]);
+            });
+        }
+
         async function cargarGaleria() {
+            aplicarGaleriaLocal();
             try {
                 const respuesta = await fetch(`${ORIGEN_API}/api/galeria`);
                 if (!respuesta.ok) throw new Error(`Error ${respuesta.status}`);
                 const porArea = await respuesta.json();
 
                 document.querySelectorAll('[data-area]').forEach((tarjeta) => {
-                    const fotos = (porArea[tarjeta.dataset.area] || []).map((f) => resolverUrlImagen(f, FOTO_GITHUB_PRINCIPAL));
+                    const area = tarjeta.dataset.area;
+                    const respaldoArea = (FOTOS_GALERIA_GITHUB[area] && FOTOS_GALERIA_GITHUB[area][0]) || FOTOS_PORTADA_GITHUB[0];
+                    const fotos = (porArea[area] || []).map((f) => resolverUrlImagen(f, respaldoArea));
                     if (!fotos.length) return;
                     tarjeta.setAttribute('data-galeria', '');
                     tarjeta.dataset.indice = 0;
-                    tarjeta.innerHTML = contenidoGaleria(fotos, tarjeta.dataset.titulo);
+                    tarjeta.innerHTML = contenidoGaleria(fotos, tarjeta.dataset.titulo, respaldoArea);
                 });
             } catch (error) {
                 console.error('Error cargando la galería:', error);
