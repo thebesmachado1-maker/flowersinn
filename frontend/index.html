@@ -280,9 +280,9 @@
                         <select id="tipo" required
                             class="mt-1 w-full border border-gray-300 rounded-lg p-2.5 bg-white focus:outline-none focus:border-emeraldCustom-800">
                             <option value="" disabled selected>Selecciona un tipo</option>
-                            <option value="Habitación Sencilla">Habitación Sencilla</option>
-                            <option value="Habitación Doble">Habitación Doble</option>
-                            <option value="Habitación Triple">Habitación Triple</option>
+                            <option value="Individual Standard">Individual Standard</option>
+                            <option value="Doble Matrimonial">Doble Matrimonial</option>
+                            <option value="Suite Ejecutiva">Suite Ejecutiva</option>
                         </select>
                     </label>
                     <label class="block text-sm text-gray-600">Precio por noche (USD)
@@ -609,9 +609,9 @@
         }
 
         const TARIFAS_NOCHE = {
-            'Habitación Sencilla': 15,
-            'Habitación Doble': 25,
-            'Habitación Triple': 30
+            'Individual Standard': 35,
+            'Doble Matrimonial': 50,
+            'Suite Ejecutiva': 75
         };
 
         document.getElementById('tipo').addEventListener('change', (e) => {
@@ -673,7 +673,7 @@
         }
 
         const TIPOS_INFO = {
-            'Habitación Sencilla': {
+            'Individual Standard': {
                 fotos: [
                     `${GITHUB_IMG_BASE}/individual-standard/matrimonial.jpg`,
                     `${GITHUB_IMG_BASE}/individual-standard/matrimonial2.jpg`
@@ -681,7 +681,7 @@
                 camas: '1 cama · Confort individual',
                 desc: 'Espacio acogedor y tranquilo diseñado para un descanso reparador.'
             },
-            'Habitación Doble': {
+            'Doble Matrimonial': {
                 fotos: [
                     `${GITHUB_IMG_BASE}/doble-matrimonial/doble.jpg`
                 ],
@@ -689,7 +689,7 @@
                 desc: 'Ideal para parejas o viajes compartidos con mayor comodidad y amplitud.',
                 destacada: true
             },
-            'Habitación Triple': {
+            'Suite Ejecutiva': {
                 fotos: [
                     `${GITHUB_IMG_BASE}/habitacion-triple/triple.jpg`,
                     `${GITHUB_IMG_BASE}/habitacion-triple/triple1.jpg`
@@ -713,10 +713,11 @@
                 ? 'border-2 border-brand-500 shadow-2xl'
                 : 'border border-sand-200 shadow-xl hover:border-brand-500';
             const fallback = `https://placehold.co/800x600/e8d5cf/7e2012?text=${encodeURIComponent(t.tipo)}`;
-            const respaldoLocal = (info.fotos && info.fotos[0]) || `${GITHUB_IMG_BASE}/individual-standard/matrimonial.jpg`;
-            const delServidor = (t.imagenes || []).map((f) => resolverUrlImagen(f, respaldoLocal));
-            const fotos = delServidor.length ? delServidor
-                : (info.fotos && info.fotos.length ? info.fotos : [fallback]);
+            const delServidor = (t.imagenes || []).map((f) => resolverUrlImagen(f, fallback));
+            const fotos = (info.fotos && info.fotos.length)
+                ? info.fotos
+                : (delServidor.length ? delServidor : [fallback]);
+            const respaldoLocal = fotos[0] || fallback;
 
             return `
             <div class="bg-white rounded-3xl overflow-hidden ${borde} transition duration-300 flex flex-col relative">
